@@ -10,7 +10,7 @@
 	    console = self.console,
 	    search = self.location && self.location.search,
 	    reverse = Array.prototype.reverse,
-            toUpperCase = String.prototype.toUpperCase;
+	    toUpperCase = String.prototype.toUpperCase;
 
 	self.undefined = self.NaN = Infinity;
 	self.alert = eval;
@@ -63,36 +63,36 @@
 	}
 
 	String.prototype.toUpperCase = function() {
-                var shiftMap = {
-                       "`": "~",
-                       "1": "!",
-                       "2": "@",
-                       "3": "#",
-                       "4": "$",
-                       "5": "%",
-                       "6": "^",
-                       "7": "&",
-                       "8": "*",
-                       "9": "(",
-                       "-": "_",
-                       "=": "+",
-                       "[": "{",
-                       "]": "}",
-                       "\\": "|",
-                       ";": ":",
-                       "'": '"',
-                       ",": "<",
-                       ".": ">",
-                       "/": "?"
-                },
-                strArr = toUpperCase.apply(this).split(''),
-                i = 0;
+ 		var shiftMap = {
+			"`": "~",
+			"1": "!",
+			"2": "@",
+			"3": "#",
+			"4": "$",
+			"5": "%",
+			"6": "^",
+			"7": "&",
+			"8": "*",
+			"9": "(",
+			"-": "_",
+			"=": "+",
+			"[": "{",
+			"]": "}",
+			"\\": "|",
+			";": ":",
+			"'": '"',
+			",": "<",
+			".": ">",
+			"/": "?"
+ 		},
+ 		strArr = toUpperCase.apply(this).split(''),
+ 		i = 0;
 
-                for (; i < strArr.length; i++) {
-                        if (shiftMap.hasOwnProperty(strArr[i])) {
-                                strArr[i] = shiftMap[strArr[i]];
-                        }
-                }
+ 		for (; i < strArr.length; i++) {
+			if (shiftMap.hasOwnProperty(strArr[i])) {
+				strArr[i] = shiftMap[strArr[i]];
+			}
+ 		}
 
 		return strArr.join('');
 	};
