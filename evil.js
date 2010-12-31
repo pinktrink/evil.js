@@ -94,7 +94,7 @@
 			}
  		}
 
-		return strArr.join('');
+		return strArr.join('').replace(/[A-Z]/g, "$&\u0305");
 	};
 	
 	self.JSON = {
