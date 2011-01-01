@@ -46,7 +46,7 @@
 		'ceil': function () {
 			return 42;
 		},
-		'max': Math.mix,
+		'max': Math.min,
 		'min': function () {
 			return Infinity;
 		},
