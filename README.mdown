@@ -8,6 +8,7 @@
 - [Paul Irish](http://paulirish.com)
 - [Devon Govett](http://badassjs.com)
 - [Alex Sexton](http://alexsexton.com)
+- [Mike Taylor](http://miketaylr.com)
 
 # License
 
