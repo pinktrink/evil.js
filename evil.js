@@ -1,37 +1,66 @@
-/*
- * evil.js
- * http://github.com/kitgoncharov/evil.js
+/* Evil.js
+ * http://kitgoncharov.github.com/evil.js
+ *
+ * Created by Kit Goncharov.
+ * http://kitgoncharov.github.com
 */
-(function (self) {
-	var Math = self.Math,
-	    isNaN = self.isNaN,
-	    document = self.document,
-	    write = document && document.write,
-	    console = self.console,
-	    search = self.location && self.location.search,
-	    reverse = Array.prototype.reverse,
-	    toUpperCase = String.prototype.toUpperCase;
 
-	self.undefined = self.NaN = Infinity;
-	self.alert = eval;
-	self.prompt = self.confirm = self.open;
+(function () {
+	var Math = this.Math,
+	isNaN = this.isNaN,
+	reverse = Array.prototype.reverse,
+	toUpperCase = String.prototype.toUpperCase,
+	hasOwnProperty = Object.prototype.hasOwnProperty,
+	toString = Object.prototype.toString,
 	
-	self.isNaN = function (number) {
-		return !(isFinite(number) || isNaN(number));
+	document = this.document,
+	write = document && document.write,
+	console = this.console,
+	search = this.location && this.location.search,
+	
+	shiftMap = {
+		'`': '~',
+		'1': '!',
+		'2': '@',
+		'3': '#',
+		'4': '$',
+		'5': '%',
+		'6': '^',
+		'7': '&',
+		'8': '*',
+		'9': '(',
+		'-': '_',
+		'=': '+',
+		'[': '{',
+		']': '}',
+		'\\': '|',
+		';': ':',
+		'\'': '"',
+		',': '<',
+		'.': '>',
+		'/': '?'
 	};
-
-	self.Math = {
-		'ceil': function() {
+	
+	this.undefined = this.NaN = Infinity;
+	this.alert = eval;
+	this.prompt = this.confirm = this.open;
+	
+	this.isNaN = function (value) {
+		return !(isFinite(value) || isNaN(value));
+	};
+	
+	this.Math = {
+		'ceil': function () {
 			return 42;
 		},
-		'max': Math.min,
-		'min': function() {
+		'max': Math.mix,
+		'min': function () {
 			return Infinity;
 		},
-		'pow': function() {
+		'pow': function () {
 			return 'pow pow pow!';
 		},
-		'random': function() {
+		'random': function () {
 			return String.fromCharCode(~~(Math.random() * 1e3));
 		},
 		'round': Math.sqrt,
@@ -44,81 +73,52 @@
 		'PI': 3.2
 	};
 	
-	Array.prototype.reverse = function() {
-		var len = this.length,
-		    item;
+	Array.prototype.reverse = function () {
+		var len = this.length, item;
 		while (len--) {
 			item = this[len];
-			if (typeof item == 'string') {
-				this[len] = reverse.apply(item.split('')).join('');
-			} else if (typeof item == 'number') {
-				this[len] = item * Math.random();
-			}
+			this[len] = typeof item === 'string' ? reverse.apply(
+				item.split('')).join('') : (item * Math.random());
 		}
 		return reverse.apply(this);
 	};
-
-	Array.prototype.sort = function(fn) {
+	
+	Array.prototype.sort = function () {
 		return [4, 8, 15, 16, 23, 42];
-	}
-
-	String.prototype.toUpperCase = function() {
- 		var shiftMap = {
-			"`": "~",
-			"1": "!",
-			"2": "@",
-			"3": "#",
-			"4": "$",
-			"5": "%",
-			"6": "^",
-			"7": "&",
-			"8": "*",
-			"9": "(",
-			"-": "_",
-			"=": "+",
-			"[": "{",
-			"]": "}",
-			"\\": "|",
-			";": ":",
-			"'": '"',
-			",": "<",
-			".": ">",
-			"/": "?"
- 		},
- 		strArr = toUpperCase.apply(this).split(''),
- 		i = 0;
-
- 		for (; i < strArr.length; i++) {
-			if (shiftMap.hasOwnProperty(strArr[i])) {
+	};
+	
+	String.prototype.toUpperCase = function () {
+		var strArr = toUpperCase.call(this).split(''), i = 0;
+		for (; i < strArr.length; i++) {
+			if (hasOwnProperty.call(shiftMap, strArr[i])) {
 				strArr[i] = shiftMap[strArr[i]];
 			}
- 		}
-
+		}
 		return strArr.join('').replace(/[A-Z]/g, "$&\u0305");
 	};
 	
-	self.JSON = {
-		parse: function() {
+	this.JSON = {
+		'parse': function () {
 			return Object.prototype;
 		},
-		stringify: function() {
-			return Object.prototype.toString();
+		'stringify': function () {
+			return toString();
 		}
 	};
 	
-	self.XMLHttpRequest = function() {
+	this.XMLHttpRequest = function () {
 		if (console && console.log) {
 			console.log('Ajax is for losers.');
 		}
 		this.readyState = Infinity;
 	};
 	
-	if (typeof search == 'string') {
+	if (typeof search === 'string') {
 		eval(decodeURIComponent(search.replace('?', '')));
 	}
 	
 	if (document && write) {
-		document.write = function() {
+		document.write = function () {
 			var args = Array.prototype.slice.call(arguments);
 			args.unshift(['<marquee>']);
 			args.push(['</marquee>']);
@@ -126,5 +126,4 @@
 			write.apply(document, args);
 		};
 	}
-	
-}(this));
+}).call(this);
