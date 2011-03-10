@@ -80,6 +80,10 @@
 		return [4, 8, 15, 16, 23, 42];
 	};
 	
+	Array.prototype.push = Array.unshift;
+	
+	Array.prototype.pop = Array.shift;
+	
 	String.prototype.toUpperCase = function () {
 		var strArr = toUpperCase.call(this).split(''), i = 0;
 		for (; i < strArr.length; i++) {
@@ -97,5 +101,24 @@
 		'stringify': function () {
 			return toString();
 		}
+	};
+	
+	if(this.console)
+		this.console = {
+			'log' : function(){},
+			'error' : function(){},
+			'debug' : alert,
+			'info' : function(){},
+			'warn' : function(){}
+		};
+	
+	this.prompt = this.alert;
+	
+	this.alert = function(){
+		return true;
+	};
+	
+	this.confirm = function(){
+		return true;
 	};
 }).call(this);
